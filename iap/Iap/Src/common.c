@@ -50,6 +50,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "common.h"
 #include "main.h"
+#include "usart.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -174,7 +175,7 @@ void Serial_PutString(uint8_t *p_string)
   {
     length++;
   }
-  HAL_UART_Transmit(&UartHandle, p_string, length, TX_TIMEOUT);
+  HAL_UART_Transmit(&huart2, p_string, length, TX_TIMEOUT);
 }
 
 /**
@@ -185,11 +186,11 @@ void Serial_PutString(uint8_t *p_string)
 HAL_StatusTypeDef Serial_PutByte( uint8_t param )
 {
   /* May be timeouted... */
-  if ( UartHandle.gState == HAL_UART_STATE_TIMEOUT )
+  if ( huart2.gState == HAL_UART_STATE_TIMEOUT )
   {
-    UartHandle.gState = HAL_UART_STATE_READY;
+    huart2.gState = HAL_UART_STATE_READY;
   }
-  return HAL_UART_Transmit(&UartHandle, &param, 1, TX_TIMEOUT);
+  return HAL_UART_Transmit(&huart2, &param, 1, TX_TIMEOUT);
 }
 /**
   * @}
