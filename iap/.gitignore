@@ -1,0 +1,14 @@
+#build directory
+build/*
+
+#tag files
+cscope.files
+cscope.in.out
+cscope.out
+cscope.po.out
+tags
+
+#swap files
+*.swp
+../plrtest/*.swp
+
