@@ -92,7 +92,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-#warning 
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
