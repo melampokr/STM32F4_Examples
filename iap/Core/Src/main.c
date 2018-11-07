@@ -43,6 +43,7 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
+#include "menu.h"
 
 /* USER CODE END Includes */
 
@@ -50,6 +51,8 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+extern pFunction JumpToApplication;
+extern uint32_t JumpAddress;
 
 /* USER CODE END PV */
 
@@ -89,7 +92,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+#warning 
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -97,6 +100,20 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+
+  if (HAL_GPIO_ReadPin(USER_Btn_GPIO_Port, USER_Btn_Pin) == GPIO_PIN_SET) {
+    Main_Menu();
+  }
+  else {
+    if (((*(__IO uint32_t*)APPLICATION_ADDRESS) & 0x2FFE0000) == SRAM1_BASE) {
+      /* Get User application Reset_Handler function pointer */
+      JumpAddress = *(__IO uint32_t*) (APPLICATION_ADDRESS + 4);
+      JumpToApplication = (pFunction) JumpAddress;
+      /* Initialize user application's Stack Pointer */
+      __set_MSP(*(__IO uint32_t*) APPLICATION_ADDRESS);
+      JumpToApplication();
+    }
+  }
 
   /* USER CODE END 2 */
 
