@@ -105,7 +105,7 @@ int main(void)
     Main_Menu();
   }
   else {
-    if (((*(__IO uint32_t*)APPLICATION_ADDRESS) & 0x2FFE0000) == SRAM1_BASE) {
+    if (((*(__IO uint32_t*)APPLICATION_ADDRESS) & 0x2FFC0000) == 0x20000000) {
       /* Get User application Reset_Handler function pointer */
       JumpAddress = *(__IO uint32_t*) (APPLICATION_ADDRESS + 4);
       JumpToApplication = (pFunction) JumpAddress;
